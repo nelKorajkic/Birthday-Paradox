@@ -34,25 +34,28 @@ $('#btn').click(function() {
 function btnText() {
     setTimeout(btn.innerHTML = 'Generate Again', 100);
 }
+
 //This is the function which does all the simulation
 function probability() {
+    var n = Math.floor(Math.random() * (100 - 1) + 1);
     // Num of groups is a random number of simulations (max -min + min)
-    var numOfGroups = Math.floor(Math.random() * (1000 - 1000) + 1000);
+    var numOfGroups = Math.floor(Math.random() * (3000 - 1000) + 1000);
     //console.log('num of groups = ' +numOfGroups);
 
     //makes the array of the number of people in each simulation
     var groupArray = new Array(numOfGroups);
     //console.log('length of the array of groups = '+groupArray.length);
-
+    console.log(n);
     //Goes through the array`and gives each simulation a number of people
     for (i = 0; i < groupArray.length; i++) {
-        groupArray[i] = Math.floor(Math.random() * (70 - 70) + 70);
+        groupArray[i] = n;
     }
     //We start comparing people for birthdays
-    birthdayCheck(groupArray);
+    birthdayCheck(groupArray, n);
 }
 
-function birthdayCheck(num) {
+function birthdayCheck(num, n) {
+    console.log(n);
     //console.log(num);
     //Shows the total number of people we used in our simulation
     var total = 0;
@@ -84,28 +87,30 @@ function birthdayCheck(num) {
                     //console.log("match found!");
                     //add two people as sharing bdays
                     countDupe = 1;
-                    console.log('count is' + countDupe);
+                    //console.log('count is' + countDupe);
                     //  console.log("person array k is at"+personArray[k]);
                     // console.log('count is'+countDupe);
+                } else {
+                    countDupe += 0;
                 }
-                else {
-                  countDupe+=0;
+                //console.log(personArray);;
             }
-            //console.log(personArray);;
+            // console.log(dupeTotal);
+            // console.log(personArray);
+            //adds to the total after each iteration
+            total = n * num.length;
         }
-        // console.log(dupeTotal);
-        // console.log(personArray);
-        //adds to the total after each iteration
-        total += num[i];
+        dupeTotal += countDupe;
+        //generate probability
+
     }
-      dupeTotal += countDupe;
-    //generate probability
-}
-console.log("duplicate total: " + dupeTotal);
-console.log("total sims: " + totalSims);
-    var probOfMatch = Math.round((dupeTotal / totalSims) * 100);
-    console.log("prob: " + probOfMatch);
+    console.log("duplicate total: " + dupeTotal);
+    console.log("total sims: " + totalSims);
+    var probOfMatch = ((dupeTotal / totalSims) * 100);
+    var probOfMatch2Decimals = probOfMatch.toFixed(2);
+    //probOfMatch.toString().match(/.*\..{0,2}|.*/)[0];
+    console.log("prob: " + probOfMatch2Decimals);
     //This prints the results (num of ppl and num of simulations)
-    results.innerHTML = "You generated " + total + " total people in " + num.length + " number of random simulations";
-    prob.innerHTML = "The probability in this simulation that people had the same birthday was " + probOfMatch + "%";
-}
+    results.innerHTML = "You had " + n + " number of people in each group you generated " + total + " total people in " + num.length + " number of random simulations";
+    prob.innerHTML = "The probability in this simulation that atleast 2 people had the same birthday was " + probOfMatch2Decimals + "%";
+  }

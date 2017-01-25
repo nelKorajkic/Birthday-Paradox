@@ -75,6 +75,10 @@ body .container2 {
   box-shadow: 2px 2px 20px black;
 }
 
+body .container2 h1 {
+  font-size: 1.4em;
+}
+
 footer p {
   color: #111111;
   bottom: 0;
@@ -84,7 +88,7 @@ footer p {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-@media screen (max-width: 571px) {
+@media (min-width: 571px) {
   h1 {
     font-size: 1.2em;
   }
